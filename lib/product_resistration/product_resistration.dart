@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shoppingmall/product_resistration/widget/image_picker.dart';
+import 'package:shoppingmall/product_resistration/widget/inputbox.dart';
+import 'package:shoppingmall/product_resistration/widget/resistration_button.dart';
 
 class ProductRegistration extends StatelessWidget {
   const ProductRegistration({super.key});
@@ -15,27 +18,17 @@ class ProductRegistration extends StatelessWidget {
           },
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 300,
-            color: Colors.blue,
-            child: const Center(
-              child: Text('이미지등록하기'),
-            ),
-          ),
-
-          Container(
-            child: const Text('상품등록'),
-          ),
-          
-           Container(
-            child: const Text('상품등록버튼'),
-          )         
-
-        ],
-      )
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ImagePicker(),
+            SizedBox(height: 25),
+            InputBox(),
+          ],
+        ),
+      ),
+      bottomNavigationBar: RegistrationButton(),
     );
   }
 }
