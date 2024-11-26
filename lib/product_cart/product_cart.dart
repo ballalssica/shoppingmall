@@ -12,9 +12,7 @@ class ProductCart extends StatelessWidget {
       body: const Center(
         child: Text(
           'Hello!!!!!',
-          style: TextStyle(
-            fontFamily: 'NotoSnas'
-          )
+          style: TextStyle(fontFamily: 'NotoSans'),
         ),
       ),
     );
