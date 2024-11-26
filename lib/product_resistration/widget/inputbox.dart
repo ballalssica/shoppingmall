@@ -3,23 +3,25 @@ import 'package:flutter/material.dart';
 class InputBox extends StatelessWidget {
   final TextEditingController priceController = TextEditingController();
 
+  InputBox({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 375,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Text(
+              const Text(
                 '상품 이름',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Expanded(
                 child: SizedBox(
                   height: 40,
@@ -33,25 +35,25 @@ class InputBox extends StatelessWidget {
                         borderSide: BorderSide.none,
                       ),
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
+                          const EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 '상품 가격',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Expanded(
                 child: SizedBox(
                   height: 40,
@@ -68,13 +70,13 @@ class InputBox extends StatelessWidget {
                         borderSide: BorderSide.none,
                       ),
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
+                          const EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                     ),
                   ),
                 ),
               ),
-              SizedBox(width: 10),
-              Text(
+              const SizedBox(width: 10),
+              const Text(
                 '원',
                 style: TextStyle(
                   fontSize: 20,
@@ -83,17 +85,17 @@ class InputBox extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           Row(
             children: [
-              Text(
+              const Text(
                 '상품 설명',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Expanded(
                 child: SizedBox(
                   height: 300,
@@ -111,7 +113,7 @@ class InputBox extends StatelessWidget {
                         borderSide: BorderSide.none,
                       ),
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: 18, vertical:10),
+                          const EdgeInsets.symmetric(horizontal: 18, vertical:10),
                     ),
                   ),
                 ),

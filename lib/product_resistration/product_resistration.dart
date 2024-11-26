@@ -23,12 +23,12 @@ class ProductRegistration extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ImagePicker(),
-            SizedBox(height: 25),
+            const SizedBox(height: 25),
             InputBox(),
           ],
         ),
       ),
-      bottomNavigationBar: RegistrationButton(),
+      bottomNavigationBar: const RegistrationButton(),
     );
   }
 }
