@@ -4,35 +4,50 @@ import 'package:shoppingmall/product_resistration/product_resistration.dart';
 import 'package:shoppingmall/models/product.dart';
 
 class HomePage extends StatefulWidget {
+  final List<Map<String, dynamic>>? data;
+
+  const HomePage({super.key, this.data});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  // 상품 리스트 관리
-  List<Map<String, dynamic>> items = [
-    {
-      "name": "일조농장 사과",
-      "description": "신선한 사과 1박스",
-      "price": 25000,
-    },
-    {
-      "name": "햇고구마",
-      "description": "달콤한 고구마 5kg",
-      "price": 15000,
-    },
-    {
-      "name": "제주 귤",
-      "description": "싱싱한 제주도 귤 10kg",
-      "price": 30000,
-    },
-  ];
+  late List<Map<String, dynamic>> items;
+
+  @override
+  void initState() {
+    super.initState();
+    // 초기 상품 리스트
+    items = [
+      {
+        "name": "일조농장 사과",
+        "description": "신선한 사과 1박스",
+        "price": 25000.0,
+      },
+      {
+        "name": "햇고구마",
+        "description": "달콤한 고구마 5kg",
+        "price": 15000.0,
+      },
+      {
+        "name": "제주 귤",
+        "description": "싱싱한 제주도 귤 10kg",
+        "price": 30000.0,
+      },
+    ];
+
+    // 새로운 데이터 추가
+    if (widget.data != null) {
+      items.addAll(widget.data!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('상품 목록'),
+        title: const Text('상품 목록'),
       ),
       body: ListView.builder(
         padding: EdgeInsets.zero,
@@ -77,31 +92,31 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Center(child: Text('이미지')),
+                      child: const Center(child: Text('이미지')),
                     ),
-                    SizedBox(width: 22),
+                    const SizedBox(width: 22),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           item['name'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
-                        Container(
+                        const SizedBox(height: 10),
+                        SizedBox(
                           width: 230,
                           child: Text(
                             item['description'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
                           children: [
                             Container(
@@ -109,11 +124,11 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
                                 vertical: 5,
                               ),
-                              child: Text(
+                              child: const Text(
                                 "일조농장",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -122,31 +137,30 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 25),
-Container(
-  alignment: Alignment.centerRight, // 오른쪽 정렬
-  child: Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Text(
-        "${item['price'].toStringAsFixed(0)}", // 소수점 이하 제거
-        style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      SizedBox(width: 5),
-      Text(
-        "원",
-        style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ],
-  ),
-),
-
+                            const SizedBox(width: 25),
+                            Container(
+                              alignment: Alignment.centerRight, // 오른쪽 정렬
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "${(item['price'] is double ? item['price'] : double.parse(item['price'].toString())).toStringAsFixed(0)}",
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  const Text(
+                                    "원",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -173,7 +187,7 @@ Container(
               items.add({
                 'name': result.name,
                 'description': result.description,
-                'price': result.price,
+                'price': result.price ?? 0.0, // 기본값 처리
               });
             });
           }

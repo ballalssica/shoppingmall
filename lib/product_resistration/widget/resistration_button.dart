@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shoppingmall/home_page/home_page.dart';
 
 class RegistrationButton extends StatelessWidget {
-  const RegistrationButton({super.key});
+  final VoidCallback onPressed;
+  final TextEditingController nameController;
+  final TextEditingController descriptionController;
+  final TextEditingController priceController;
+
+  const RegistrationButton({
+    super.key,
+    required this.onPressed,
+    required this.nameController,
+    required this.descriptionController,
+    required this.priceController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +22,6 @@ class RegistrationButton extends StatelessWidget {
       height: 95,
       child: OutlinedButton(
         onPressed: () {
-          // 버튼 클릭 시 팝업
           showDialog(
             context: context,
             builder: (context) => Dialog(
@@ -22,6 +33,7 @@ class RegistrationButton extends StatelessWidget {
                 width: 325,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
                   children: [
                     // 상단 파란색 영역
                     Container(
@@ -44,19 +56,37 @@ class RegistrationButton extends StatelessWidget {
                     ),
                     // 하단 확인 버튼
                     Container(
+                      height: 60,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.vertical(
                           bottom: Radius.circular(20), // 하단 라운드 처리
                         ),
                       ),
+                      alignment: Alignment.center, // 버튼 중앙 정렬
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pop(context); // 팝업 닫기
+
+                          // 데이터 가공
+                          List<Map<String, dynamic>> data = [
+                            {
+                              "name": nameController.text,
+                              "description": descriptionController.text.length > 10
+                                  ? descriptionController.text.substring(0, 10) + "..."
+                                  : descriptionController.text,
+                              "price": priceController.text,
+                            },
+                          ];
+
+                          // HomePage로 데이터 전달
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(data: data),
+                            ),
+                          );
                         },
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.white,
-                        ),
                         child: const Text(
                           '확인',
                           style: TextStyle(
