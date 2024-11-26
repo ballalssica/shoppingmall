@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoppingmall/home_page/home_page.dart';
 import 'package:shoppingmall/product_cart/product_cart.dart';
-import 'package:shoppingmall/product_detal/product_detail.dart';
+import 'package:shoppingmall/product_detail/product_detail.dart';
 import 'package:shoppingmall/product_resistration/product_resistration.dart';
 
 
