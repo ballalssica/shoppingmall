@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:io'; // File 사용을 위해 필요
-import 'package:image_picker/image_picker.dart';
-import 'package:shoppingmall/product_resistration/widget/inputbox.dart';
-import 'package:shoppingmall/product_resistration/widget/resistration_button.dart';
+import 'dart:io';
+import 'package:shoppingmall/product_resistration/widget/custom_image_picker.dart';
+import 'widget/inputbox.dart';
+import 'widget/resistration_button.dart';
 
 class ProductRegistration extends StatefulWidget {
   const ProductRegistration({super.key});
@@ -13,16 +13,12 @@ class ProductRegistration extends StatefulWidget {
 
 class _ProductRegistrationState extends State<ProductRegistration> {
   File? _selectedImage; // 선택된 이미지 파일 저장
-  final ImagePicker _picker = ImagePicker(); // ImagePicker 인스턴스 생성
 
-  // 이미지 선택 함수
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery); // 갤러리에서 이미지 선택
-    if (pickedFile != null) {
-      setState(() {
-        _selectedImage = File(pickedFile.path); // 선택된 이미지를 _selectedImage에 저장
-      });
-    }
+  // 이미지 선택 후 처리
+  void _handleImagePicked(File? image) {
+    setState(() {
+      _selectedImage = image; // 선택된 이미지를 상태에 저장
+    });
   }
 
   @override
@@ -41,26 +37,8 @@ class _ProductRegistrationState extends State<ProductRegistration> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: _pickImage, // 이미지 선택 함수 호출
-              child: Container(
-                height: 300,
-                color: Colors.blue,
-                child: _selectedImage == null
-                    ? const Center(
-                        child: Icon(
-                          Icons.add,
-                          size: 50,
-                          color: Colors.white,
-                        ),
-                      )
-                    : Image.file(
-                        _selectedImage!,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
-              ),
+            CustomImagePicker(
+              onImagePicked: _handleImagePicked, // 이미지 선택 후 처리
             ),
             const SizedBox(height: 25),
             InputBox(),
@@ -71,3 +49,4 @@ class _ProductRegistrationState extends State<ProductRegistration> {
     );
   }
 }
+

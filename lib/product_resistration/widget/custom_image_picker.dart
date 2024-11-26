@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class ImagePickerWidget extends StatefulWidget {
-  const ImagePickerWidget({super.key});
+class CustomImagePicker extends StatefulWidget {
+  final Function(File?) onImagePicked; // 이미지 선택 후 처리 함수 전달
+
+  const CustomImagePicker({super.key, required this.onImagePicked});
 
   @override
-  _ImagePickerWidgetState createState() => _ImagePickerWidgetState();
+  _CustomImagePickerState createState() => _CustomImagePickerState();
 }
 
-class _ImagePickerWidgetState extends State<ImagePickerWidget> {
-  File? _selectedImage; // 선택한 이미지를 저장하는 변수
+class _CustomImagePickerState extends State<CustomImagePicker> {
+  File? _selectedImage; // 선택된 이미지를 저장하는 변수
   final ImagePicker _picker = ImagePicker(); // ImagePicker 인스턴스 생성
 
   Future<void> _pickImage() async {
@@ -22,6 +24,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
       setState(() {
         _selectedImage = File(pickedFile.path); // 선택된 이미지 저장
       });
+      widget.onImagePicked(_selectedImage); // 부모 위젯에 이미지 전달
     }
   }
 
