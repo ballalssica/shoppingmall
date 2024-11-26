@@ -1,4 +1,3 @@
-
 class Product {
   final String image;
   final String name;
