@@ -22,7 +22,7 @@ class ProductRegistration extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ImagePicker(),
+            const ImagePicker(),
             const SizedBox(height: 25),
             InputBox(),
           ],
