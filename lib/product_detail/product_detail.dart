@@ -11,7 +11,7 @@ class ProductDetails extends StatelessWidget {
       ),
       body: const Center(
         child: Text(
-          'Hello!!!!!',
+          'Hello!!!!!!!',
           style: TextStyle(
             fontFamily: 'NotoSnas'
           )
