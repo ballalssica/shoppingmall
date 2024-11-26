@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // TextInputFormatter 사용
+import 'package:intl/intl.dart'; // 숫자 포맷팅용 패키지
 
 class InputBox extends StatelessWidget {
   final TextEditingController priceController = TextEditingController();
 
   InputBox({super.key});
+
+  void _formatNumber(String value) {
+    String newValue = value.replaceAll(',', ''); // 기존 콤마 제거
+    if (newValue.isNotEmpty) {
+      final formattedValue =
+          NumberFormat.decimalPattern('en').format(int.parse(newValue));
+      priceController.value = TextEditingValue(
+        text: formattedValue,
+        selection: TextSelection.collapsed(offset: formattedValue.length), // 커서 위치 유지
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +26,7 @@ class InputBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // 상품 이름 입력 필드
           Row(
             children: [
               const Text(
@@ -43,6 +58,8 @@ class InputBox extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 18),
+
+          // 상품 가격 입력 필드
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -60,7 +77,11 @@ class InputBox extends StatelessWidget {
                   child: TextField(
                     controller: priceController,
                     keyboardType: TextInputType.number,
-                    textAlign: TextAlign.right, // 오른쪽 정렬
+                    textAlign: TextAlign.right,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly, // 숫자만 입력 가능
+                    ],
+                    onChanged: _formatNumber,
                     decoration: InputDecoration(
                       hintText: '숫자만 입력 가능해요.',
                       filled: true,
@@ -86,6 +107,8 @@ class InputBox extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 18),
+
+          // 상품 설명 입력 필드
           Row(
             children: [
               const Text(
@@ -113,7 +136,7 @@ class InputBox extends StatelessWidget {
                         borderSide: BorderSide.none,
                       ),
                       contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 18, vertical:10),
+                          const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                     ),
                   ),
                 ),
