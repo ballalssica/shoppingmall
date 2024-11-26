@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shoppingmall/home_page/home_page.dart';
 
 class RegistrationButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -22,11 +21,12 @@ class RegistrationButton extends StatelessWidget {
       height: 95,
       child: OutlinedButton(
         onPressed: () {
+          // 팝업 표시
           showDialog(
             context: context,
             builder: (context) => Dialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20), // 팝업 전체 라운드 처리
+                borderRadius: BorderRadius.circular(20), // 팝업 라운드 처리
               ),
               child: SizedBox(
                 height: 185,
@@ -69,23 +69,16 @@ class RegistrationButton extends StatelessWidget {
                           Navigator.pop(context); // 팝업 닫기
 
                           // 데이터 가공
-                          List<Map<String, dynamic>> data = [
-                            {
-                              "name": nameController.text,
-                              "description": descriptionController.text.length > 10
-                                  ? descriptionController.text.substring(0, 10) + "..."
-                                  : descriptionController.text,
-                              "price": priceController.text,
-                            },
-                          ];
+                          final newProduct = {
+                            "name": nameController.text,
+                            "description": descriptionController.text.length > 10
+                                ? descriptionController.text.substring(0, 10) + "..."
+                                : descriptionController.text,
+                            "price": int.tryParse(priceController.text) ?? 0,
+                          };
 
-                          // HomePage로 데이터 전달
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(data: data),
-                            ),
-                          );
+                          // 등록된 데이터를 반환하고 이전 페이지로 이동
+                          Navigator.pop(context, newProduct);
                         },
                         child: const Text(
                           '확인',

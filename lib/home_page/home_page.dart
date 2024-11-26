@@ -1,47 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:shoppingmall/product_detal/product_detail.dart';
 import 'package:shoppingmall/product_resistration/product_resistration.dart';
-import 'package:shoppingmall/models/product.dart';
+import 'package:intl/intl.dart';
+
+String formatPrice(int price) {
+  final formatter = NumberFormat('#,###');
+  return '${formatter.format(price)}';
+}
 
 class HomePage extends StatefulWidget {
-  final List<Map<String, dynamic>>? data;
-
-  const HomePage({super.key, this.data});
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<Map<String, dynamic>> items;
-
-  @override
-  void initState() {
-    super.initState();
-    // 초기 상품 리스트
-    items = [
-      {
-        "name": "일조농장 사과",
-        "description": "신선한 사과 1박스",
-        "price": 25000.0,
-      },
-      {
-        "name": "햇고구마",
-        "description": "달콤한 고구마 5kg",
-        "price": 15000.0,
-      },
-      {
-        "name": "제주 귤",
-        "description": "싱싱한 제주도 귤 10kg",
-        "price": 30000.0,
-      },
-    ];
-
-    // 새로운 데이터 추가
-    if (widget.data != null) {
-      items.addAll(widget.data!);
-    }
-  }
+  // 상품 리스트 관리
+  List<Map<String, dynamic>> items = [
+    {
+      "name": "일조농장 사과",
+      "description": "신선한 사과 1박스",
+      "price": 25000,
+    },
+    {
+      "name": "햇고구마",
+      "description": "달콤한 고구마 5kg",
+      "price": 15000,
+    },
+    {
+      "name": "제주 귤",
+      "description": "싱싱한 제주도 귤 10kg",
+      "price": 30000,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -138,28 +128,23 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             const SizedBox(width: 25),
-                            Container(
-                              alignment: Alignment.centerRight, // 오른쪽 정렬
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "${(item['price'] is double ? item['price'] : double.parse(item['price'].toString())).toStringAsFixed(0)}",
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            Row(
+                              children: [
+                                Text(formatPrice(item['price']),
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  const SizedBox(width: 5),
-                                  const Text(
-                                    "원",
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                ),
+                                const SizedBox(width: 5),
+                                const Text(
+                                  "원",
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -174,21 +159,18 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final result = await Navigator.push<Product>(
+          // Navigator.push()로 ProductRegistration 호출
+          final result = await Navigator.push<Map<String, dynamic>>(
             context,
             MaterialPageRoute(
               builder: (context) => const ProductRegistration(),
             ),
           );
 
-          // 상품 등록 후, 리스트에 아이템 추가
+          // 새 상품이 추가되었는지 확인 후 리스트 업데이트
           if (result != null) {
             setState(() {
-              items.add({
-                'name': result.name,
-                'description': result.description,
-                'price': result.price ?? 0.0, // 기본값 처리
-              });
+              items.add(result);
             });
           }
         },

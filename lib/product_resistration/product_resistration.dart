@@ -26,17 +26,21 @@ class _ProductRegistrationState extends State<ProductRegistration> {
   }
 
   void _submitForm() {
+    // 폼 검증
     if (_formKey.currentState!.validate()) {
-      double? price;
+      int? price;
       try {
-        price = double.parse(_priceController.text);
+        // 가격 변환 시도
+        price = int.parse(_priceController.text);
       } catch (e) {
+        // 유효하지 않은 가격 처리
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Invalid price entered')),
         );
         return;
       }
 
+      // Product 객체 생성
       final product = Product(
         image: _imageUrl,
         name: _nameController.text,
@@ -44,6 +48,7 @@ class _ProductRegistrationState extends State<ProductRegistration> {
         price: price,
       );
 
+      // 데이터 반환 및 페이지 닫기
       Navigator.pop(context, product);
     }
   }
@@ -56,7 +61,7 @@ class _ProductRegistrationState extends State<ProductRegistration> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context); // 뒤로가기
           },
         ),
       ),
@@ -96,9 +101,9 @@ class _ProductRegistrationState extends State<ProductRegistration> {
       ),
       bottomNavigationBar: RegistrationButton(
         onPressed: _submitForm,
-        nameController: _nameController, // 추가
-        descriptionController: _descriptionController, // 추가
-        priceController: _priceController, // 추가
+        nameController: _nameController,
+        descriptionController: _descriptionController,
+        priceController: _priceController,
       ),
     );
   }

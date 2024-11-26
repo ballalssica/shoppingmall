@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shoppingmall/home_page/home_page.dart';
-import 'package:shoppingmall/product_cart/product_cart.dart';
-import 'package:shoppingmall/product_detal/product_detail.dart';
-import 'package:shoppingmall/product_resistration/product_resistration.dart';
-
-
 
 void main() {
   runApp(const MyApp());
@@ -40,66 +35,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white, // 기본 색상 설정
         useMaterial3: false, // Material 3 비활성화
       ),
-      home: const MainPage(),
-    );
-  }
-}
-
-// 협업 시 각자 코드 확인을 위한 임시페이지
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('쇼핑몰'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
-              },
-              child: const Text('홈페이지'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ProductRegistration()),
-                );
-              },
-              child: const Text('상품등록'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ProductDetails(item: {},)),
-                );
-              },
-              child: const Text('상품상세'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ProductCart()),
-                );
-              },
-              child: const Text('장바구니'),
-            ),
-          ],
-        ),
-      ),
+      home: HomePage(), // MainPage 대신 HomePage를 바로 불러오도록 수정
     );
   }
 }

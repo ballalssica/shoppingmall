@@ -1,10 +1,9 @@
-import 'package:flutter/foundation.dart';
 
 class Product {
   final String image;
   final String name;
   final String description;
-  final double price;
+  final int price;
   
   Product({
     required this.image,
