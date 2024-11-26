@@ -123,21 +123,30 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             SizedBox(width: 25),
-                            Text(
-                            "${item['price'].toStringAsFixed(0)}",  // 소수점 이하 제거
-                            style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            ),
-                            ),
-                            SizedBox(width: 5),
-                            Text(
-                              "원",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+Container(
+  alignment: Alignment.centerRight, // 오른쪽 정렬
+  child: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Text(
+        "${item['price'].toStringAsFixed(0)}", // 소수점 이하 제거
+        style: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      SizedBox(width: 5),
+      Text(
+        "원",
+        style: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ],
+  ),
+),
+
                           ],
                         ),
                       ],
