@@ -63,7 +63,7 @@ class MainPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  MaterialPageRoute(builder: (context) => HomePage()),
                 );
               },
               child: const Text('홈페이지'),
@@ -83,7 +83,7 @@ class MainPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const ProductDetails()),
+                      builder: (context) => const ProductDetails(item: {},)),
                 );
               },
               child: const Text('상품상세'),
