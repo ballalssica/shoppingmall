@@ -28,8 +28,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  intl: ^0.18.0
   flutter:
     sdk: flutter
+  image_picker: ^1.1.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -77,23 +79,23 @@ flutter:
   fonts:
     - family: NotoSansKR
       fonts:
-        - asset: fonts/NotoSansKR-Thin.ttf
+        - asset: asset/fonts/NotoSansKR-Thin.ttf
           weight: 100
-        - asset: fonts/NotoSansKR-ExtraLight.ttf
+        - asset: asset/fonts/NotoSansKR-ExtraLight.ttf
           weight: 200
-        - asset: fonts/NotoSansKR-Light.ttf
+        - asset: asset/fonts/NotoSansKR-Light.ttf
           weight: 300
-        - asset: fonts/NotoSansKR-Regular.ttf
+        - asset: asset/fonts/NotoSansKR-Regular.ttf
           weight: 400
-        - asset: fonts/NotoSansKR-Medium.ttf
+        - asset: asset/fonts/NotoSansKR-Medium.ttf
           weight: 500
-        - asset: fonts/NotoSansKR-SemiBold.ttf
+        - asset: asset/fonts/NotoSansKR-SemiBold.ttf
           weight: 600
-        - asset: fonts/NotoSansKR-Bold.ttf
+        - asset: asset/fonts/NotoSansKR-Bold.ttf
           weight: 700
-        - asset: fonts/NotoSansKR-ExtraBold.ttf
+        - asset: asset/fonts/NotoSansKR-ExtraBold.ttf
           weight: 800
-        - asset: fonts/NotoSansKR-Black.ttf
+        - asset: asset/fonts/NotoSansKR-Black.ttf
           weight: 900
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
