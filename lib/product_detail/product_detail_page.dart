@@ -31,7 +31,9 @@ class ProductDetailPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: AddToCartButton(),
+      bottomNavigationBar: SafeArea(
+        child: AddToCartButton(),
+      ),
     );
   }
 }

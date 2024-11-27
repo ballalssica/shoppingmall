@@ -25,8 +25,8 @@ class _AddToCartButtonState extends State<AddToCartButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      height: 80, // 장바구니 영역 크기
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8), // 내부 여백 감소
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(top: BorderSide(color: Colors.grey[300]!)),
@@ -38,10 +38,10 @@ class _AddToCartButtonState extends State<AddToCartButton> {
           Row(
             children: [
               _buildRoundButton(Icons.remove, _decrementQuantity),
-              SizedBox(width: 10),
+              SizedBox(width: 8),
               Container(
-                width: 42,
-                height: 42,
+                width: 36, // 수량 버튼 크기
+                height: 36,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -57,23 +57,23 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                 ),
                 child: Text(
                   '$_quantity',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 8),
               _buildRoundButton(Icons.add, _incrementQuantity),
-              SizedBox(width: 30),
+              SizedBox(width: 20),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     '총',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 4),
                   Text(
                     '${9900 * _quantity} 원',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -82,60 +82,46 @@ class _AddToCartButtonState extends State<AddToCartButton> {
           // 장바구니 버튼
           ElevatedButton(
             onPressed: () {
-              // 장바구니로 추가하는 로직을 구현
               showDialog(
                 context: context,
                 builder: (context) => Dialog(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20), // 팝업 전체 라운드 처리
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Container(
-                    height: 185,
-                    width: 325,
+                    height: 160,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         // 상단 파란색 영역
                         Container(
-                          height: 125,
+                          height: 100,
                           decoration: BoxDecoration(
                             color: Colors.blue,
                             borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(20), // 상단 라운드 처리
+                              top: Radius.circular(20),
                             ),
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             '등록이 완료되었습니다.',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
                         ),
                         // 하단 확인 버튼
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(20), // 하단 라운드 처리
-                            ),
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.white,
-                            ),
-                            child: Text(
-                              '확인',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            '확인',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -148,14 +134,13 @@ class _AddToCartButtonState extends State<AddToCartButton> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             ),
             child: Text(
               '장바구니로',
-              style: TextStyle(
-                  fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -167,8 +152,8 @@ class _AddToCartButtonState extends State<AddToCartButton> {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        width: 42,
-        height: 42,
+        width: 36, // 버튼 크기
+        height: 36,
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.circle,

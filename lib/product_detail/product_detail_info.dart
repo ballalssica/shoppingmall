@@ -28,7 +28,7 @@ class ProductDetailInfo extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 10),
           Text(
             '신선한 당근 한 묶음입니다. 산지 직송으로 하루 만에 배달하는 홈당근이에요.',
             style: TextStyle(fontSize: 16, color: Colors.grey[700]),
