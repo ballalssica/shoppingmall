@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 
 class ProductCart extends StatefulWidget {
-  const ProductCart({super.key});
+  final List<Map<String, dynamic>>? initialItems; // Added this line
+
+  const ProductCart({super.key, this.initialItems // Added this line
+      });
 
   @override
   State<ProductCart> createState() => _ProductCartState();
 }
 
 class _ProductCartState extends State<ProductCart> {
-  // Initialize empty cart
-  List<Map<String, dynamic>> cartItems = [];
+  late List<Map<String, dynamic>> cartItems; // Changed to late
+
+  @override
+  void initState() {
+    super.initState();
+    cartItems = widget.initialItems ??
+        []; // Initialize with provided items or empty list
+  }
 
   void _updateQuantity(int index, bool increment) {
     setState(() {
@@ -139,8 +148,47 @@ class _ProductCartState extends State<ProductCart> {
                                   width: 80,
                                   height: 80,
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[200],
                                     borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: item['image'] != null
+                                        ? item['imageType'] == 'asset'
+                                            ? Image.asset(
+                                                item['image'],
+                                                fit: BoxFit.cover,
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return Container(
+                                                    color: Colors.grey[200],
+                                                    child: const Icon(
+                                                      Icons.image_not_supported,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  );
+                                                },
+                                              )
+                                            : Image.file(
+                                                item['image'],
+                                                fit: BoxFit.cover,
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return Container(
+                                                    color: Colors.grey[200],
+                                                    child: const Icon(
+                                                      Icons.image_not_supported,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  );
+                                                },
+                                              )
+                                        : Container(
+                                            color: Colors.grey[200],
+                                            child: const Icon(
+                                              Icons.image_not_supported,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
                                   ),
                                 ),
                                 const SizedBox(width: 16),

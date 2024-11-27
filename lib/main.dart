@@ -19,13 +19,13 @@ class MyApp extends StatelessWidget {
         // 앱바 테마 설정
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          backgroundColor: Colors.white, 
-          elevation: 5, 
+          backgroundColor: Colors.white,
+          elevation: 5,
           iconTheme: IconThemeData(
             color: Color(0xFF4B87FF),
           ),
           titleTextStyle: TextStyle(
-            color: Colors.black87, 
+            color: Colors.black87,
             fontSize: 22,
             fontWeight: FontWeight.bold,
           ),

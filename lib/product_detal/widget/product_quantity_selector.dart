@@ -7,7 +7,7 @@ List<Map<String, dynamic>> cartItems = [];
 class ProductQuantitySelector extends StatefulWidget {
   final Map<String, dynamic> item;
   final Function(int quantity)? onQuantityChanged;
-  final VoidCallback? onAddToCart;
+  final Function(Map<String, dynamic>)? onAddToCart;
 
   const ProductQuantitySelector({
     super.key,
@@ -41,18 +41,25 @@ class _ProductQuantitySelectorState extends State<ProductQuantitySelector> {
   }
 
   void _addToCart(BuildContext context) {
-    // Add selected item to the shared cart
-    cartItems.add({
+    final cartItem = {
       'name': widget.item['name'],
       'price': widget.item['price'],
       'quantity': _quantity,
-    });
+      'image': widget.item['image'],
+      'imageType': widget.item['image'] is String ? 'asset' : 'file',
+    };
+
+    // Add selected item to the shared cart
+    cartItems.add(cartItem);
+
+    // Call the onAddToCart callback with the item data
+    widget.onAddToCart?.call(cartItem);
 
     // Navigate to the cart page
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const ProductCart(),
+        builder: (context) => ProductCart(initialItems: cartItems),
       ),
     );
   }
