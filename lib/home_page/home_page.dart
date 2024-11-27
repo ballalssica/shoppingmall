@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shoppingmall/product_detal/product_detail.dart';
 import 'package:shoppingmall/product_resistration/product_resistration.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
 
 String formatPrice(int price) {
   final formatter = NumberFormat('#,###');
@@ -21,19 +20,19 @@ class _HomePageState extends State<HomePage> {
       "name": "일조농장 사과",
       "description": "신선한 사과 1박스",
       "price": 25000,
-      "image": null,
+      "image": "assets/images/apple.jpg", // 새 경로 반영
     },
     {
       "name": "햇고구마",
       "description": "달콤한 고구마 5kg",
       "price": 15000,
-      "image": null,
+      "image": "assets/images/sweetpotato.jpg", // 새 경로 반영
     },
     {
       "name": "제주 귤",
       "description": "싱싱한 제주도 귤 10kg",
       "price": 30000,
-      "image": null,
+      "image": "assets/images/orange.jpeg", // 새 경로 반영
     },
   ];
 
@@ -51,13 +50,10 @@ class _HomePageState extends State<HomePage> {
 
           return GestureDetector(
             onTap: () {
-              // 아이템 데이터 전달
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProductDetails(
-                    item: item, // 필수 파라미터 전달
-                  ),
+                  builder: (context) => ProductDetails(item: item),
                 ),
               );
             },
@@ -87,20 +83,19 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: item['image'] != null
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.file(
-                                item['image'],
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: item['image'] != null
+                            ? Image.asset(
+                                item['image'], // 새 경로 반영
                                 fit: BoxFit.cover,
                                 width: 120,
                                 height: 120,
-                              ),
-                            )
-                          : const Center(child: Text('이미지 없음')),
+                              )
+                            : const Center(child: Text('이미지 없음')),
+                      ),
                     ),
                     const SizedBox(width: 22),
-                    // 텍스트 영역
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
-                            overflow: TextOverflow.ellipsis, // 텍스트가 길면 '...' 처리
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 10),
                           Text(
@@ -120,8 +115,8 @@ class _HomePageState extends State<HomePage> {
                               fontSize: 14,
                               color: Colors.grey,
                             ),
-                            overflow: TextOverflow.ellipsis, // 설명도 '...' 처리
-                            maxLines: 2, // 최대 2줄까지만 표시
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
                           const SizedBox(height: 10),
                           Row(
@@ -155,7 +150,6 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // ProductRegistration 호출
           final result = await Navigator.push<Map<String, dynamic>>(
             context,
             MaterialPageRoute(
@@ -163,7 +157,6 @@ class _HomePageState extends State<HomePage> {
             ),
           );
 
-          // 새 상품이 추가되었는지 확인 후 리스트 업데이트
           if (result != null) {
             setState(() {
               items.add(result);
