@@ -1,56 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:shoppingmall/product_resistration/widget/inputbox.dart';
-import 'package:shoppingmall/product_resistration/widget/resistration_button.dart';
-import '../models/product.dart';
+import 'dart:io';
+import 'package:shoppingmall/product_resistration/widget/custom_image_picker.dart';
+import 'widget/inputbox.dart';
+import 'widget/resistration_button.dart';
 
 class ProductRegistration extends StatefulWidget {
   const ProductRegistration({super.key});
 
   @override
-  State<ProductRegistration> createState() => _ProductRegistrationState();
+  _ProductRegistrationState createState() => _ProductRegistrationState();
 }
 
 class _ProductRegistrationState extends State<ProductRegistration> {
-  final _formKey = GlobalKey<FormState>();
-  String _imageUrl = '';
-  final _nameController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _priceController = TextEditingController();
+  File? _selectedImage; // 선택된 이미지 파일 저장
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _descriptionController.dispose();
-    _priceController.dispose();
-    super.dispose();
+  // 이미지 선택 후 처리
+  void _handleImagePicked(File? image) {
+    setState(() {
+      _selectedImage = image; // 선택된 이미지를 상태에 저장
+    });
   }
 
-  void _submitForm() {
-    // 폼 검증
-    if (_formKey.currentState!.validate()) {
-      int? price;
-      try {
-        // 가격 변환 시도
-        price = int.parse(_priceController.text);
-      } catch (e) {
-        // 유효하지 않은 가격 처리
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid price entered')),
-        );
-        return;
-      }
-
-      // Product 객체 생성
-      final product = Product(
-        image: _imageUrl,
-        name: _nameController.text,
-        description: _descriptionController.text,
-        price: price,
+  void _submitData() {
+    // 입력 데이터 유효성 검사
+    if (nameController.text.isEmpty ||
+        priceController.text.isEmpty ||
+        descriptionController.text.isEmpty ||
+        _selectedImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("모든 항목을 입력해주세요!",
+        textAlign: TextAlign.center,)),
+        
       );
-
-      // 데이터 반환 및 페이지 닫기
-      Navigator.pop(context, product);
+      return;
     }
+
+    // 데이터를 HomePage로 전달
+    Navigator.pop(context, {
+      "name": nameController.text,
+      "price": int.parse(priceController.text.replaceAll(',', '')),
+      "description": descriptionController.text,
+      "image": _selectedImage,
+    });
   }
 
   @override
@@ -65,46 +59,23 @@ class _ProductRegistrationState extends State<ProductRegistration> {
           },
         ),
       ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  height: 300,
-                  color: Colors.blue,
-                  child: const Center(
-                    child: Icon(
-                      Icons.add,
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // InputBox 가로 중앙 정렬
-                Center(
-                  child: InputBox(
-                    nameController: _nameController,
-                    descriptionController: _descriptionController,
-                    priceController: _priceController,
-                  ),
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomImagePicker(
+              onImagePicked: _handleImagePicked, // 이미지 선택 후 처리
             ),
-          ),
+            const SizedBox(height: 25),
+            InputBox(
+              nameController: nameController,
+              priceController: priceController,
+              descriptionController: descriptionController,
+            ),
+          ],
         ),
       ),
-      bottomNavigationBar: RegistrationButton(
-        onPressed: _submitForm,
-        nameController: _nameController,
-        descriptionController: _descriptionController,
-        priceController: _priceController,
-      ),
+      bottomNavigationBar: RegistrationButton(onPressed: _submitData),
     );
   }
 }
