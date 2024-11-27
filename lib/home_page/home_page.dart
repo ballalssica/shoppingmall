@@ -19,19 +19,19 @@ class _HomePageState extends State<HomePage> {
       "name": "일조농장 사과",
       "description": "신선한 사과 1박스",
       "price": 25000,
-      "image": "assets/images/apple.jpg",
+      "image": "assets/images/apple.jpg", // String 타입 경로
     },
     {
       "name": "햇고구마",
       "description": "달콤한 고구마 5kg",
       "price": 15000,
-      "image": "assets/images/sweetpotato.jpg",
+      "image": "assets/images/sweetpotato.jpg", // String 타입 경로
     },
     {
       "name": "제주 귤",
       "description": "싱싱한 제주도 귤 10kg",
       "price": 30000,
-      "image": "assets/images/orange.jpeg",
+      "image": null, // 이미지가 없는 경우
     },
   ];
 
@@ -96,24 +96,34 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    // 이미지 표시
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: item['image'] != null
                           ? item['image'] is String
                               ? Image.asset(
                                   item['image'], // String 타입이면 Image.asset 사용
-                                  fit: BoxFit.cover,
                                   width: 100,
                                   height: 100,
+                                  fit: BoxFit.cover,
                                 )
                               : Image.file(
                                   item['image'], // File 타입이면 Image.file 사용
-                                  fit: BoxFit.cover,
                                   width: 100,
                                   height: 100,
+                                  fit: BoxFit.cover,
                                 )
-                          : const Center(child: Text('이미지 없음')), // null이면 기본 메시지 표시
+                          : Container(
+                              width: 100,
+                              height: 100,
+                              color: Colors.grey[300],
+                              child: const Center(
+                                child: Icon(
+                                  Icons.image_not_supported,
+                                  size: 40,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -124,13 +134,11 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             item['name'],
                             style: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black87,
                             ),
-                            overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 10),
                           // 상품 설명
                           Text(
                             item['description'],
@@ -138,18 +146,54 @@ class _HomePageState extends State<HomePage> {
                               fontSize: 14,
                               color: Colors.grey,
                             ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
                           ),
-                          const SizedBox(height: 12),
-                          // 가격
-                          Text(
-                            "${formatPrice(item['price'])} 원",
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
+                          const SizedBox(height: 10),
+                          // 가격 및 태그
+                          Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF4B87FF),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 5,
+                                ),
+                                child: const Text(
+                                  "일조농장",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 25),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 90,
+                                    child: Text(
+                                      formatPrice(item['price']),
+                                      textAlign: TextAlign.right,
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  const Text(
+                                    "원",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),
