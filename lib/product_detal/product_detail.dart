@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // 가격 포맷팅에 사용
+import 'package:shoppingmall/product_cart/product_cart.dart';
 import 'dart:io';
 import 'package:shoppingmall/product_detal/widget/product_quantity_selector.dart'; // ProductQuantitySelector 가져오기
 
@@ -109,21 +110,22 @@ class ProductDetails extends StatelessWidget {
         ),
       ),
       // ProductQuantitySelector 사용
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ProductQuantitySelector(
-          item: item,
-          onQuantityChanged: (quantity) {
-            print('선택된 수량: $quantity');
-          },
-          onAddToCart: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${item['name']}이(가) 장바구니에 추가되었습니다.'),
-              ),
-            );
-          },
-        ),
+      bottomNavigationBar: ProductQuantitySelector(
+        item: item,
+        onQuantityChanged: (quantity) {
+          // Handle quantity changes
+          print('Quantity changed to: $quantity');
+        },
+        // Changed from VoidCallback to Function(Map<String, dynamic>)
+        onAddToCart: (cartItem) {
+          // Add this parameter
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductCart(initialItems: [cartItem]),
+            ),
+          );
+        },
       ),
     );
   }
@@ -132,5 +134,5 @@ class ProductDetails extends StatelessWidget {
 // 가격 포맷팅 함수
 String formatPrice(int price) {
   final formatter = NumberFormat('#,###');
-  return '${formatter.format(price)}';
+  return formatter.format(price);
 }
