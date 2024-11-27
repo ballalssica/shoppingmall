@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white, 
           elevation: 5, 
           iconTheme: IconThemeData(
-            color: Colors.blue,
+            color: Color(0xFF4B87FF),
           ),
           titleTextStyle: TextStyle(
             color: Colors.black87, 

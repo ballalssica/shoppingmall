@@ -37,7 +37,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('상품 목록'),
+        title: const Text('일조동'),
+        centerTitle: false,
+        titleTextStyle: const TextStyle(
+    fontSize: 20, // 제목 크기 22로 설정
+    fontWeight: FontWeight.normal, // 볼드 제거
+    color: Colors.black87, // 제목 색상 설정
+        ),
+        actions: [
+    IconButton(
+      icon: const Icon(Icons.shopping_cart), // 장바구니 아이콘
+      onPressed: () {
+        // 장바구니 버튼 눌렀을 때 동작
+      },
+    ),
+    IconButton(
+      icon: const Icon(Icons.notifications), // 알림 아이콘
+      onPressed: () {
+        // 알림 버튼 눌렀을 때 동작
+      },
+    ),
+  ],
       ),
       body: ListView.builder(
         padding: EdgeInsets.zero,
@@ -111,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.blue,
+                                color: Color(0xFF4B87FF),
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               padding: const EdgeInsets.symmetric(
@@ -129,13 +149,17 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const SizedBox(width: 25),
                             Row(
-                              children: [
+                              children: [Container(
+                                width: 90,
+                                child: 
                                 Text(formatPrice(item['price']),
+                                  textAlign: TextAlign.right,
                                   style: const TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                              ),
                                 const SizedBox(width: 5),
                                 const Text(
                                   "원",
