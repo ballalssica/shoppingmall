@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shoppingmall/product_cart/product_cart.dart';
 
+// Shared cart items list
+List<Map<String, dynamic>> cartItems = [];
+
 class ProductQuantitySelector extends StatefulWidget {
   final Map<String, dynamic> item;
   final Function(int quantity)? onQuantityChanged;
@@ -37,7 +40,15 @@ class _ProductQuantitySelectorState extends State<ProductQuantitySelector> {
     }
   }
 
-  void _goToCart(BuildContext context) {
+  void _addToCart(BuildContext context) {
+    // Add selected item to the shared cart
+    cartItems.add({
+      'name': widget.item['name'],
+      'price': widget.item['price'],
+      'quantity': _quantity,
+    });
+
+    // Navigate to the cart page
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -74,18 +85,6 @@ class _ProductQuantitySelectorState extends State<ProductQuantitySelector> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: const Text(
-                    '3일이상소요',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                ),
                 Text(
                   '${widget.item['price']}원',
                   style: const TextStyle(
@@ -112,10 +111,6 @@ class _ProductQuantitySelectorState extends State<ProductQuantitySelector> {
                     IconButton(
                       icon: const Icon(Icons.remove, size: 16),
                       onPressed: _decrementQuantity,
-                      constraints: const BoxConstraints(
-                        minWidth: 32,
-                        minHeight: 32,
-                      ),
                     ),
                     Container(
                       width: 40,
@@ -128,30 +123,13 @@ class _ProductQuantitySelectorState extends State<ProductQuantitySelector> {
                     IconButton(
                       icon: const Icon(Icons.add, size: 16),
                       onPressed: _incrementQuantity,
-                      constraints: const BoxConstraints(
-                        minWidth: 32,
-                        minHeight: 32,
-                      ),
                     ),
                   ],
                 ),
               ),
               const Spacer(),
-              // Total price
-              Text(
-                '${(widget.item['price'] * _quantity).toString()}원',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(width: 12),
-              // Add to cart button
               ElevatedButton(
-                onPressed: () {
-                  widget.onAddToCart?.call(); // 기존 콜백 호출
-                  _goToCart(context); // ProductCart 페이지로 이동
-                },
+                onPressed: () => _addToCart(context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   padding: const EdgeInsets.symmetric(
