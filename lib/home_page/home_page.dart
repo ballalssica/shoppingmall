@@ -14,25 +14,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // 상품 리스트 관리
   List<Map<String, dynamic>> items = [
     {
       "name": "일조농장 사과",
       "description": "신선한 사과 1박스",
       "price": 25000,
-      "image": "assets/images/apple.jpg", // 새 경로 반영
+      "image": "assets/images/apple.jpg",
     },
     {
       "name": "햇고구마",
       "description": "달콤한 고구마 5kg",
       "price": 15000,
-      "image": "assets/images/sweetpotato.jpg", // 새 경로 반영
+      "image": "assets/images/sweetpotato.jpg",
     },
     {
       "name": "제주 귤",
       "description": "싱싱한 제주도 귤 10kg",
       "price": 30000,
-      "image": "assets/images/orange.jpeg", // 새 경로 반영
+      "image": "assets/images/orange.jpeg",
     },
   ];
 
@@ -86,12 +85,19 @@ class _HomePageState extends State<HomePage> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: item['image'] != null
-                            ? Image.asset(
-                                item['image'], // 새 경로 반영
-                                fit: BoxFit.cover,
-                                width: 120,
-                                height: 120,
-                              )
+                            ? item['image'] is String
+                                ? Image.asset(
+                                    item['image'],
+                                    fit: BoxFit.cover,
+                                    width: 120,
+                                    height: 120,
+                                  )
+                                : Image.file(
+                                    item['image'],
+                                    fit: BoxFit.cover,
+                                    width: 120,
+                                    height: 120,
+                                  )
                             : const Center(child: Text('이미지 없음')),
                       ),
                     ),

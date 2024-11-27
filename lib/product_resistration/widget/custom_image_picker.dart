@@ -34,7 +34,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
       onTap: _pickImage, // 아이콘 클릭 시 이미지 선택
       child: Container(
         height: 300,
-        color: Colors.blue,
+        color: Color(0xFF4B87FF),
         child: _selectedImage == null
             ? const Center(
                 child: Icon(

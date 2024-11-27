@@ -81,6 +81,7 @@ class InputBox extends StatelessWidget {
                     FilteringTextInputFormatter.digitsOnly, // 숫자만 입력 가능
                   ],
                   onChanged: _formatNumber, // 입력값 포맷팅
+                  textAlign: TextAlign.right, // 오른쪽 정렬 추가
                   decoration: InputDecoration(
                     hintText: '숫자만 입력 가능해요.',
                     filled: true,
@@ -120,7 +121,7 @@ class InputBox extends StatelessWidget {
                   controller: descriptionController,
                   maxLines: 5,
                   decoration: InputDecoration(
-                    hintText: '상품 설명을 입력해주세요.',
+                    hintText: '상품의 특징을 먼저 작성해주세요.',
                     filled: true,
                     fillColor: Colors.grey[200],
                     border: OutlineInputBorder(

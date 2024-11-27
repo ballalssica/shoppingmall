@@ -31,7 +31,9 @@ class _ProductRegistrationState extends State<ProductRegistration> {
         descriptionController.text.isEmpty ||
         _selectedImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("모든 항목을 입력해주세요!")),
+        const SnackBar(content: Text("모든 항목을 입력해주세요!",
+        textAlign: TextAlign.center,)),
+        
       );
       return;
     }
