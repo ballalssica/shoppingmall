@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('일조동'),
         centerTitle: false,
         titleTextStyle: const TextStyle(
+
           fontSize: 20,
           fontWeight: FontWeight.bold,
           color: Colors.black87,
@@ -73,10 +74,12 @@ class _HomePageState extends State<HomePage> {
 
           return GestureDetector(
             onTap: () {
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ProductDetails(item: item),
+
                 ),
               );
             },
@@ -165,6 +168,7 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
+
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -213,7 +217,6 @@ class _HomePageState extends State<HomePage> {
               builder: (context) => const ProductRegistration(),
             ),
           );
-
           if (result != null) {
             setState(() {
               items.add(result);

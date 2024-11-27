@@ -34,6 +34,7 @@ class InputBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 상품 이름 입력 필드
+
           Row(
             children: [
               const Text(
@@ -61,6 +62,7 @@ class InputBox extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 18),
+
 
           // 상품 가격 입력 필드
           Row(
@@ -127,6 +129,7 @@ class InputBox extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide: BorderSide.none,
+
                     ),
                   ),
                 ),

@@ -55,7 +55,7 @@ class _ProductRegistrationState extends State<ProductRegistration> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context); // 뒤로가기
           },
         ),
       ),
