@@ -39,11 +39,35 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('상품 목록'),
+        title: const Text('일조동'),
+        centerTitle: false,
+        titleTextStyle: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            onPressed: () {
+              // 장바구니 버튼 동작
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              // 알림 버튼 동작
+            },
+          ),
+        ],
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         padding: EdgeInsets.zero,
         itemCount: items.length,
+        separatorBuilder: (context, index) => const Divider(
+          color: Colors.grey,
+          height: 1,
+        ),
         itemBuilder: (context, index) {
           final item = items[index];
 
@@ -57,16 +81,14 @@ class _HomePageState extends State<HomePage> {
               );
             },
             child: Container(
-              margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    spreadRadius: 0,
-                    offset: const Offset(0, 2),
+                    color: Colors.black.withOpacity(0.05), // 낮은 강도의 쉐도우
+                    blurRadius: 5, // 그림자 퍼짐
+                    spreadRadius: 1, // 그림자 크기
+                    offset: const Offset(0, 2), // 아래쪽으로만 그림자 적용
                   ),
                 ],
               ),
@@ -75,46 +97,41 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   children: [
                     // 이미지 표시
-                    Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: item['image'] != null
-                            ? item['image'] is String
-                                ? Image.asset(
-                                    item['image'],
-                                    fit: BoxFit.cover,
-                                    width: 120,
-                                    height: 120,
-                                  )
-                                : Image.file(
-                                    item['image'],
-                                    fit: BoxFit.cover,
-                                    width: 120,
-                                    height: 120,
-                                  )
-                            : const Center(child: Text('이미지 없음')),
-                      ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: item['image'] != null
+                          ? item['image'] is String
+                              ? Image.asset(
+                                  item['image'], // String 타입이면 Image.asset 사용
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 100,
+                                )
+                              : Image.file(
+                                  item['image'], // File 타입이면 Image.file 사용
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 100,
+                                )
+                          : const Center(child: Text('이미지 없음')), // null이면 기본 메시지 표시
                     ),
-                    const SizedBox(width: 22),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // 상품 이름
                           Text(
                             item['name'],
                             style: const TextStyle(
-                              fontSize: 22,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
+                              color: Colors.black87,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 8),
+                          // 상품 설명
                           Text(
                             item['description'],
                             style: const TextStyle(
@@ -124,25 +141,15 @@ class _HomePageState extends State<HomePage> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Text(
-                                formatPrice(item['price']),
-                                style: const TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              const Text(
-                                "원",
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                          const SizedBox(height: 12),
+                          // 가격
+                          Text(
+                            "${formatPrice(item['price'])} 원",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
                           ),
                         ],
                       ),
