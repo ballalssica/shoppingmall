@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // 가격 포맷팅에 사용
-import 'dart:io'; // File 클래스 사용
+import 'dart:io';
+import 'package:shoppingmall/product_detal/widget/product_quantityselector.dart'; // ProductQuantitySelector 가져오기
 
 class ProductDetails extends StatelessWidget {
   final Map<String, dynamic> item;
@@ -107,30 +108,21 @@ class ProductDetails extends StatelessWidget {
           ),
         ),
       ),
+      // ProductQuantitySelector 사용
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SizedBox(
-          width: double.infinity,
-          height: 60,
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context); // 이전 페이지로 돌아가기
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+        child: ProductQuantitySelector(
+          item: item,
+          onQuantityChanged: (quantity) {
+            print('선택된 수량: $quantity');
+          },
+          onAddToCart: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('${item['name']}이(가) 장바구니에 추가되었습니다.'),
               ),
-            ),
-            child: const Text(
-              '확인',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );
