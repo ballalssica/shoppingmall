@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shoppingmall/product_cart/product_cart.dart';
 
 class ProductQuantitySelector extends StatefulWidget {
-  final Map<String, dynamic> item; // 상품 정보
-  final ValueChanged<int>? onQuantityChanged; // 수량 변경 콜백
-  final VoidCallback? onAddToCart; // "장바구니로" 버튼 클릭 콜백
+  final Map<String, dynamic> item;
+  final Function(int quantity)? onQuantityChanged;
+  final VoidCallback? onAddToCart;
 
   const ProductQuantitySelector({
     super.key,
@@ -18,7 +19,7 @@ class ProductQuantitySelector extends StatefulWidget {
 }
 
 class _ProductQuantitySelectorState extends State<ProductQuantitySelector> {
-  int _quantity = 1; // 기본 수량
+  int _quantity = 1;
 
   void _incrementQuantity() {
     setState(() {
@@ -36,16 +37,25 @@ class _ProductQuantitySelectorState extends State<ProductQuantitySelector> {
     }
   }
 
+  void _goToCart(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ProductCart(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 1,
             blurRadius: 6,
             offset: const Offset(0, -2),
           ),
@@ -54,32 +64,43 @@ class _ProductQuantitySelectorState extends State<ProductQuantitySelector> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 상품 이름과 가격 표시
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.item['name'],
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+          // Price and quantity selector row
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: const Text(
+                    '3일이상소요',
+                    style: TextStyle(fontSize: 12),
+                  ),
                 ),
-              ),
-              Text(
-                '${widget.item['price']}원',
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.blue,
+                Text(
+                  '${widget.item['price']}원',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 16),
-
-          // 수량 선택
+          // Cart button and total price row
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // Quantity selector
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey[300]!),
@@ -115,39 +136,41 @@ class _ProductQuantitySelectorState extends State<ProductQuantitySelector> {
                   ],
                 ),
               ),
-              // 총 가격 표시
+              const Spacer(),
+              // Total price
               Text(
-                '총: ${(widget.item['price'] * _quantity)}원',
+                '${(widget.item['price'] * _quantity).toString()}원',
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(width: 12),
+              // Add to cart button
+              ElevatedButton(
+                onPressed: () {
+                  widget.onAddToCart?.call(); // 기존 콜백 호출
+                  _goToCart(context); // ProductCart 페이지로 이동
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  '장바구니로',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 16),
-
-          // 장바구니 버튼
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: widget.onAddToCart,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                '장바구니로',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
           ),
         ],
       ),

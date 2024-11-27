@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // 가격 포맷팅에 사용
 import 'dart:io';
-import 'package:shoppingmall/product_detal/widget/product_quantityselector.dart'; // ProductQuantitySelector 가져오기
+import 'package:shoppingmall/product_detal/widget/product_quantity_selector.dart'; // ProductQuantitySelector 가져오기
 
 class ProductDetails extends StatelessWidget {
   final Map<String, dynamic> item;
